@@ -1,13 +1,8 @@
 import * as React from 'react'
 import Link from 'next/link'
 import { GetStaticProps, GetStaticPropsContext } from 'next'
-
-interface Post {
-	userId: number
-	id: number
-	title: string
-	body: string
-}
+import { Post } from './[postId]'
+import styles from './Posts.module.scss'
 
 export interface PostsProps {
 	posts: Post[]
@@ -20,7 +15,9 @@ export default function Posts({ posts }: PostsProps) {
 
 			<ul>
 				{posts.map((post) => (
-					<li key={post.id}>{post.title}</li>
+					<li className={styles.item} key={post.id}>
+						<Link href={`/posts/${post.id}`}>{post.title}</Link>
+					</li>
 				))}
 			</ul>
 
@@ -33,12 +30,12 @@ export const getStaticProps: GetStaticProps<PostsProps> = async (
 	context: GetStaticPropsContext
 ) => {
 	const response = await fetch('https://jsonplaceholder.typicode.com/posts')
-	const data: Post[] = await response.json()
-	console.log(data)
+	const posts: Post[] = await response.json()
+	// console.log(posts)
 
 	return {
 		props: {
-			posts: data,
+			posts,
 		},
 	}
 }
