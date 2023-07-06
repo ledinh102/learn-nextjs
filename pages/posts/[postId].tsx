@@ -1,38 +1,37 @@
+import { Post, PostPage } from '@/models'
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next'
-
-export interface Post {
-	userId: number
-	id: number
-	title: string
-	body: string
-}
+import { useRouter } from 'next/router'
 
 export interface PostProps {
 	post: Post
 }
 
 export default function Post({ post }: PostProps) {
-	// const router = useRouter()
+	const router = useRouter()
+
+	if (router.isFallback) return <h2>Loading...</h2>
+	if (!post) return null
+
 	return (
 		<>
-			<p>User id: {post.userId}</p>
 			<p>Id: {post.id}</p>
 			<p>Title: {post.title}</p>
 			<p>Body: {post.body}</p>
+			<p>Created by: </p>
 		</>
 	)
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-	const response = await fetch('https://jsonplaceholder.typicode.com/posts')
-	const posts: Post[] = await response.json()
-	const paths = posts.map((post) => ({
-		params: { postId: post.id.toString() },
+	const response = await fetch('http://localhost:4000/api/posts?_page=1')
+	const postPage: PostPage = await response.json()
+	const paths = postPage.data.map((post) => ({
+		params: { postId: post.id },
 	}))
 
 	return {
 		paths,
-		fallback: false,
+		fallback: true,
 	}
 }
 
@@ -41,15 +40,16 @@ export const getStaticProps: GetStaticProps<PostProps> = async (
 ) => {
 	const postId = context.params?.postId
 
-	const response = await fetch(
-		`https://jsonplaceholder.typicode.com/posts/${postId}`
-	)
+	const response = await fetch(`http://localhost:4000/api/posts/${postId}`)
+
 	const post: Post = await response.json()
 	console.log(post)
+	if (!post?.id) return { notFound: true }
 
 	return {
 		props: {
 			post,
 		},
+		revalidate: 5,
 	}
 }

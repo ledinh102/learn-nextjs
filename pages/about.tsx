@@ -2,8 +2,8 @@
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { Post } from './posts/[postId]'
 import { AdminLayout, MainLayout } from '@/components/layout'
+import { Post, PostPage } from '@/models'
 
 const Header = dynamic(() => import(`@/components/common/header`), {
 	ssr: false,
@@ -12,22 +12,23 @@ const Header = dynamic(() => import(`@/components/common/header`), {
 export interface AboutProps {}
 
 export default function About(props: AboutProps) {
-	const [post, setPost] = useState<Post>()
+	const [posts, setPosts] = useState<Post[]>()
 
 	const router = useRouter()
 	// console.log(router.query)
 
-	const page = router.query.page
+	const page = router.query?.page
+	console.log(page)
 
 	useEffect(() => {
 		;(async () => {
 			if (!page) return
 			const response = await fetch(
-				`https://jsonplaceholder.typicode.com/posts/${page}`
+				`http://localhost:4000/api/posts?_page=${page}`
 			)
-			const post: Post = await response.json()
+			const data: PostPage = await response.json()
 
-			setPost(post)
+			setPosts(data.data)
 		})()
 	}, [page])
 
@@ -36,7 +37,7 @@ export default function About(props: AboutProps) {
 			{
 				pathname: '/about',
 				query: {
-					page: page ? Number(page) + 1 : 1,
+					page: Number(page) + 1 || 1,
 				},
 			},
 			undefined,
@@ -48,7 +49,11 @@ export default function About(props: AboutProps) {
 		<>
 			<h1>Query router: {JSON.stringify(router.query)}</h1>
 			<Header />
-			<p>{post?.title}</p>
+			<ul>
+				{posts?.map((post) => (
+					<li key={post.id}>{post.title}</li>
+				))}
+			</ul>
 			<button onClick={handleNextPage}>Next page</button>
 		</>
 	)
