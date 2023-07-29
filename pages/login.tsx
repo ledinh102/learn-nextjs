@@ -1,4 +1,4 @@
-import { authApi } from '@/api'
+import { authApi } from '@/api-client'
 
 export default function LoginPage() {
   const handleLoginClick = async () => {
