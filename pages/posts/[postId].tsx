@@ -2,54 +2,54 @@ import { Post, PostPage } from '@/models'
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next'
 import { useRouter } from 'next/router'
 
+const baseUrl = process.env.API_URL
+
 export interface PostProps {
-	post: Post
+  post: Post
 }
 
 export default function Post({ post }: PostProps) {
-	const router = useRouter()
+  const router = useRouter()
 
-	if (router.isFallback) return <h2>Loading...</h2>
-	if (!post) return null
+  if (router.isFallback) return <h2>Loading...</h2>
+  if (!post) return null
 
-	return (
-		<>
-			<p>Id: {post.id}</p>
-			<p>Title: {post.title}</p>
-			<p>Body: {post.body}</p>
-			<p>Created by: </p>
-		</>
-	)
+  return (
+    <>
+      <p>Id: {post.id}</p>
+      <p>Title: {post.title}</p>
+      <p>Body: {post.body}</p>
+      <p>Created by: </p>
+    </>
+  )
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-	const response = await fetch('http://localhost:4000/api/posts?_page=1')
-	const postPage: PostPage = await response.json()
-	const paths = postPage.data.map((post) => ({
-		params: { postId: post.id },
-	}))
+  const response = await fetch(`${baseUrl}/api/posts?_page=1`)
+  const postPage: PostPage = await response.json()
+  const paths = postPage.data.map(post => ({
+    params: { postId: post.id },
+  }))
 
-	return {
-		paths,
-		fallback: true,
-	}
+  return {
+    paths,
+    fallback: true,
+  }
 }
 
-export const getStaticProps: GetStaticProps<PostProps> = async (
-	context: GetStaticPropsContext
-) => {
-	const postId = context.params?.postId
+export const getStaticProps: GetStaticProps<PostProps> = async (context: GetStaticPropsContext) => {
+  const postId = context.params?.postId
 
-	const response = await fetch(`http://localhost:4000/api/posts/${postId}`)
+  const response = await fetch(`${baseUrl}/api/posts/${postId}`)
 
-	const post: Post = await response.json()
-	console.log(post)
-	if (!post?.id) return { notFound: true }
+  const post: Post = await response.json()
+  console.log(post)
+  if (!post?.id) return { notFound: true }
 
-	return {
-		props: {
-			post,
-		},
-		revalidate: 5,
-	}
+  return {
+    props: {
+      post,
+    },
+    revalidate: 5,
+  }
 }
