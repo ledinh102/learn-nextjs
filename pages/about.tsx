@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react'
 import { AdminLayout, MainLayout } from '@/components/layout'
 import { Post, PostPage } from '@/models'
 
+const baseUrl = process.env.API_URL
+
 const Header = dynamic(() => import(`@/components/common/header`), {
   ssr: false,
 })
@@ -23,7 +25,7 @@ export default function About(props: AboutProps) {
   useEffect(() => {
     ;(async () => {
       if (!page) return
-      const response = await fetch(`http://localhost:4000/api/posts?_page=${page}`)
+      const response = await fetch(`${baseUrl}/api/posts?_page=${page}`)
       const data: PostPage = await response.json()
 
       setPosts(data.data)

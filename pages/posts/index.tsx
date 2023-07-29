@@ -4,6 +4,8 @@ import { GetStaticProps, GetStaticPropsContext } from 'next'
 import styles from './Posts.module.scss'
 import { Pagination, Post, PostPage } from '@/models'
 
+const baseUrl = process.env.API_URL
+
 export interface PostsProps {
   postPage: {
     data: Post[]
@@ -30,7 +32,7 @@ export default function Posts({ postPage }: PostsProps) {
 }
 
 export const getStaticProps: GetStaticProps<PostsProps> = async (context: GetStaticPropsContext) => {
-  const response = await fetch('http://localhost:4000/api/posts?_page=1')
+  const response = await fetch(`${baseUrl}/api/posts?_page=1`)
   const postPage: PostPage = await response.json()
 
   return {

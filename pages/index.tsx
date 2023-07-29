@@ -1,8 +1,6 @@
 import { MainLayout } from '@/components/layout'
-import { NextPageWithLayout } from '@/models'
 import { Inter } from 'next/font/google'
 import Link from 'next/link'
-import { useEffect } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
 
