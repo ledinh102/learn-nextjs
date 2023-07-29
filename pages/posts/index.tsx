@@ -1,43 +1,41 @@
 import * as React from 'react'
 import Link from 'next/link'
 import { GetStaticProps, GetStaticPropsContext } from 'next'
-import styles from './posts.module.scss'
+import styles from './Posts.module.scss'
 import { Pagination, Post, PostPage } from '@/models'
 
 export interface PostsProps {
-	postPage: {
-		data: Post[]
-		pagination: Pagination[]
-	}
+  postPage: {
+    data: Post[]
+    pagination: Pagination[]
+  }
 }
 
 export default function Posts({ postPage }: PostsProps) {
-	return (
-		<>
-			<h1>Hello posts page</h1>
+  return (
+    <>
+      <h1>Hello posts page</h1>
 
-			<ul>
-				{postPage.data.map((post) => (
-					<li className={styles.item} key={post.id}>
-						<Link href={`/posts/${post.id}`}>{post.title}</Link>
-					</li>
-				))}
-			</ul>
+      <ul>
+        {postPage.data.map(post => (
+          <li className={styles.item} key={post.id}>
+            <Link href={`/posts/${post.id}`}>{post.title}</Link>
+          </li>
+        ))}
+      </ul>
 
-			<Link href="/">Go to Homepage</Link>
-		</>
-	)
+      <Link href='/'>Go to Homepage</Link>
+    </>
+  )
 }
 
-export const getStaticProps: GetStaticProps<PostsProps> = async (
-	context: GetStaticPropsContext
-) => {
-	const response = await fetch('http://localhost:4000/api/posts?_page=1')
-	const postPage: PostPage = await response.json()
+export const getStaticProps: GetStaticProps<PostsProps> = async (context: GetStaticPropsContext) => {
+  const response = await fetch('http://localhost:4000/api/posts?_page=1')
+  const postPage: PostPage = await response.json()
 
-	return {
-		props: {
-			postPage,
-		},
-	}
+  return {
+    props: {
+      postPage,
+    },
+  }
 }

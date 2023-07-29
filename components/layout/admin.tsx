@@ -1,15 +1,23 @@
 import { LayoutProps } from '@/models'
 import Link from 'next/link'
+import { useEffect } from 'react'
 
 export function AdminLayout({ children }: LayoutProps) {
-	return (
-		<div>
-			<h1>Admin layout</h1>
+  useEffect(() => {
+    console.log('mount')
+    return () => {
+      console.log('unmount')
+    }
+  })
 
-			<Link href="/">Home</Link>
-			<Link href="/about">About</Link>
+  return (
+    <div>
+      <h1>Admin layout</h1>
 
-			<div>{children}</div>
-		</div>
-	)
+      <Link href='/'>Home</Link>
+      <Link href='/about'>About</Link>
+
+      <div>{children}</div>
+    </div>
+  )
 }
