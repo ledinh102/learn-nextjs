@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { AdminLayout, MainLayout } from '@/components/layout'
 import { Post, PostPage } from '@/models'
+import { Box, Typography } from '@mui/material'
 
 const baseUrl = process.env.API_URL
 
@@ -46,8 +47,10 @@ export default function About(props: AboutProps) {
   }
 
   return (
-    <>
-      <h1>Query router: {JSON.stringify(router.query)}</h1>
+    <Box>
+      <Typography component='h1' variant='h3' color='primary.main'>
+        About page
+      </Typography>
       <Header />
       <ul>
         {posts?.map(post => (
@@ -55,7 +58,7 @@ export default function About(props: AboutProps) {
         ))}
       </ul>
       <button onClick={handleNextPage}>Next page</button>
-    </>
+    </Box>
   )
 }
 
