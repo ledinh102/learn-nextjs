@@ -59,7 +59,7 @@ export default function About(props: AboutProps) {
   )
 }
 
-About.Layout = MainLayout
+About.Layout = AdminLayout
 
 // export async function getServerSideProps() {
 // 	return {
