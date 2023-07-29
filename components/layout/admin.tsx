@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 export function AdminLayout({ children }: LayoutProps) {
   useEffect(() => {
     console.log('mount')
+
     return () => {
       console.log('unmount')
     }
