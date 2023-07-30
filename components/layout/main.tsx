@@ -1,11 +1,10 @@
 import { LayoutProps } from '@/models'
+import { Box, Stack } from '@mui/material'
 import Link from 'next/link'
 import { useEffect } from 'react'
-
-const baseUrl = process.env.API_URL
+import { Footer, Header } from '../common'
 
 export function MainLayout({ children }: LayoutProps) {
-  console.log('api', baseUrl)
   useEffect(() => {
     console.log('mounting...')
 
@@ -14,13 +13,17 @@ export function MainLayout({ children }: LayoutProps) {
     }
   }, [])
   return (
-    <div>
-      <h1>Main layout</h1>
+    <Stack minHeight='100vh'>
+      <Header />
 
-      <Link href='/'>Home</Link>
-      <Link href='/about'>About</Link>
+      <Box component='main' flexGrow={1}>
+        <Link href='/'>Home</Link>
+        <Link href='/blog'>Blog</Link>
+        <Link href='/works'>Works</Link>
+        {children}
+      </Box>
 
-      <div>{children}</div>
-    </div>
+      <Footer />
+    </Stack>
   )
 }

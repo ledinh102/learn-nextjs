@@ -1,5 +1,8 @@
-export interface HeaderProps {}
-
-export default function Header(props: HeaderProps) {
-	return <h2>Header</h2>
+import { Box } from '@mui/material'
+export function Header() {
+  return (
+    <Box component='header' py={2} textAlign='center'>
+      Header
+    </Box>
+  )
 }
