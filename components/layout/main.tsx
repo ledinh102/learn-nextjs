@@ -2,7 +2,8 @@ import { LayoutProps } from '@/models'
 import { Box, Container, Stack } from '@mui/material'
 import Link from 'next/link'
 import { useEffect } from 'react'
-import { Footer, Header } from '../common'
+import { Footer } from '../common'
+import { Header } from '../common/header'
 
 export function MainLayout({ children }: LayoutProps) {
   useEffect(() => {
@@ -17,10 +18,6 @@ export function MainLayout({ children }: LayoutProps) {
       <Header />
 
       <Box component='main' flexGrow={1}>
-        <Container>container</Container>
-        <Link href='/'>Home</Link>
-        <Link href='/blog'>Blog</Link>
-        <Link href='/works'>Works</Link>
         {children}
       </Box>
 

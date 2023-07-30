@@ -1,5 +1,5 @@
 import { Roboto } from 'next/font/google'
-import { createTheme } from '@mui/material/styles'
+import { createTheme, responsiveFontSizes } from '@mui/material/styles'
 import { red } from '@mui/material/colors'
 
 export const roboto = Roboto({
@@ -9,12 +9,13 @@ export const roboto = Roboto({
 })
 
 // Create a theme instance.
-export const theme = createTheme({
+export let theme = createTheme({
   palette: {
     primary: {
       main: '#ff6464',
     },
     secondary: {
+      light: '#edf7fa',
       main: '#00a8cc',
     },
     error: {
@@ -22,7 +23,7 @@ export const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: roboto.style.fontFamily,
+    fontFamily: 'Heebo, sans-serif',
   },
   components: {
     MuiContainer: {
@@ -31,18 +32,47 @@ export const theme = createTheme({
       },
       styleOverrides: {
         maxWidthSm: {
-          maxWidth: '680px',
+          maxWidth: '730px',
           '@media (min-width: 600px)': {
-            maxWidth: '680px',
+            minWidth: '730px',
           },
         },
         maxWidthMd: {
-          maxWidth: '860px',
+          maxWidth: '910px',
           '@media (min-width: 900px)': {
-            maxWidth: '860px',
+            minWidth: '910px',
           },
         },
       },
     },
+    MuiLink: {
+      defaultProps: {
+        underline: 'none',
+      },
+      styleOverrides: {
+        root: {
+          color: 'black',
+
+          '&:hover, &.active': {
+            color: '#ff6464',
+          },
+        },
+      },
+    },
+    MuiButton: {
+      variants: [
+        {
+          props: {
+            variant: 'contained',
+            color: 'primary',
+          },
+          style: {
+            color: 'white',
+          },
+        },
+      ],
+    },
   },
 })
+
+theme = responsiveFontSizes(theme)
