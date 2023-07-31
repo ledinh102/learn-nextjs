@@ -1,12 +1,13 @@
 import { Pagination } from './common'
 export interface Post {
-	userId: string
-	id: string
-	title: string
-	body: string
+  id: string | number
+  title: string
+  publishedDate: number
+  tagList: string[]
+  description: string
 }
 
 export interface PostPage {
-	data: Post[]
-	pagination: Pagination[]
+  data: Post[]
+  pagination: Pagination[]
 }

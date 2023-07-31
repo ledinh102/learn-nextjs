@@ -1,4 +1,4 @@
-import { HeroSection } from '@/components/home'
+import { HeroSection, RecentPostsSection } from '@/components/home'
 import { MainLayout } from '@/components/layout'
 import { Box } from '@mui/material'
 import { Inter } from 'next/font/google'
@@ -9,6 +9,7 @@ export default function Home() {
   return (
     <Box>
       <HeroSection />
+      <RecentPostsSection />
     </Box>
   )
 }
