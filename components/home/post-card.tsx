@@ -7,7 +7,6 @@ export interface PostCardProps {
 }
 
 export function PostCard({ post }: PostCardProps) {
-  console.log('type date', typeof new Date().getTime())
   return (
     <Card>
       <CardContent>

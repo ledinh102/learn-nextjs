@@ -1,4 +1,4 @@
-import { HeroSection, RecentPostsSection } from '@/components/home'
+import { FeaturedWorksSection, HeroSection, RecentPostsSection } from '@/components/home'
 import { MainLayout } from '@/components/layout'
 import { Box } from '@mui/material'
 import { Inter } from 'next/font/google'
@@ -10,6 +10,7 @@ export default function Home() {
     <Box>
       <HeroSection />
       <RecentPostsSection />
+      <FeaturedWorksSection />
     </Box>
   )
 }
