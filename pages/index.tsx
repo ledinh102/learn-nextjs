@@ -1,3 +1,4 @@
+import { Seo } from '@/components/common'
 import { FeaturedWorksSection, HeroSection, RecentPostsSection } from '@/components/home'
 import { MainLayout } from '@/components/layout'
 import { Box } from '@mui/material'
@@ -8,6 +9,14 @@ const inter = Inter({ subsets: ['latin'] })
 export default function Home() {
   return (
     <Box>
+      <Seo
+        data={{
+          title: 'NextJS Tutorials | Easy Frontend',
+          description: 'Step by step tutorials to build a full CRUD website using NextJS for beginners.',
+          url: 'https://nextjs.org',
+          thumbnailUrl: 'https://res.cloudinary.com/dtsbsc6r6/image/upload/v1690794825/Rectangle_32_gmu9i7.jpg'
+        }}
+      />
       <HeroSection />
       <RecentPostsSection />
       <FeaturedWorksSection />

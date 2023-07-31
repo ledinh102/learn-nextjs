@@ -1,6 +1,6 @@
 import { Work } from '@/models'
 import { Box, Container, Typography } from '@mui/material'
-import { WorkList } from '../common/work'
+import { WorkList } from '../work'
 export interface FeaturedWorksSectionProps {}
 
 export function FeaturedWorksSection(props: FeaturedWorksSectionProps) {
