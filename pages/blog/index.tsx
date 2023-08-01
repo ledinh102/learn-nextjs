@@ -9,6 +9,7 @@ export interface BlogsPageProps {
 }
 
 export default function BlogsPage({ posts }: BlogsPageProps) {
+  console.log('posts', posts)
   return (
     <>
       <h1>Hello blogs page</h1>
@@ -27,13 +28,11 @@ export default function BlogsPage({ posts }: BlogsPageProps) {
 }
 
 export const getStaticProps: GetStaticProps<BlogsPageProps> = async (context: GetStaticPropsContext) => {
-  // const response = await fetch(`${baseUrl}/api/posts?_page=1`)
-  // const postPage: PostPage = await response.json()
-  const data = await getPosts()
+  const posts = await getPosts()
 
   return {
     props: {
-      posts: data.map((x: any) => ({ id: x.id, title: x.title }))
+      posts
     }
   }
 }

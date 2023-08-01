@@ -9,19 +9,21 @@ export function RecentPostsSection(props: RecentPostsSectionProps) {
     {
       id: '1',
       title: 'Making a design system from scratch',
+      slug: '',
       description:
         'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
       publishedDate: 1390776056149,
-      tagList: ['Design', 'Pattern'],
+      tagList: ['Design', 'Pattern']
     },
     {
       id: '2',
       title: 'Creating pixel perfect icons in Figma',
+      slug: '',
       description:
         'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
       publishedDate: 1620776056149,
-      tagList: ['Figma', 'Icon Design'],
-    },
+      tagList: ['Figma', 'Icon Design']
+    }
   ]
   return (
     <Box sx={{ bgcolor: 'secondary.light' }} component='section'>
