@@ -28,7 +28,7 @@ export default function BlogsPage({ posts }: BlogsPageProps) {
       <Box component='ul' sx={{ listStyle: 'none', p: 0 }}>
         {posts.map(post => (
           <li key={post.id}>
-            <MuiLinkCustom href={`/posts/${post.slug}`}>
+            <MuiLinkCustom href={`/blog/${post.slug}`}>
               <PostItem post={post} />
             </MuiLinkCustom>
             <Divider sx={{ my: 3 }} />{' '}

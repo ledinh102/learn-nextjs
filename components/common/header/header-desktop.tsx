@@ -15,7 +15,9 @@ export default function HeaderDesktop(props: HeaderDesktopProps) {
         <Stack direction='row' justifyContent='flex-end'>
           {ROUTE_lIST.map(route => (
             <MuiLink
-              className={clsx({ active: router.pathname === route.path })}
+              className={clsx({
+                active: route.path === '/' ? router.pathname === '/' : router.pathname.startsWith(route.path)
+              })}
               fontWeight='medium'
               sx={{ ml: 2 }}
               key={route.path}
