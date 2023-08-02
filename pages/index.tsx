@@ -13,7 +13,7 @@ export default function Home() {
         data={{
           title: 'NextJS Tutorials | Easy Frontend',
           description: 'Step by step tutorials to build a full CRUD website using NextJS for beginners.',
-          url: 'https://nextjs.org',
+          url: `${process.env.HOST_URL}`,
           thumbnailUrl: 'https://res.cloudinary.com/dtsbsc6r6/image/upload/v1690794825/Rectangle_32_gmu9i7.jpg'
         }}
       />

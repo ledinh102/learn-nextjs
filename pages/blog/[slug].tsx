@@ -1,8 +1,10 @@
+import { Seo } from '@/components/common'
 import { MainLayout } from '@/components/layout'
 import { Post } from '@/models'
 import { getPosts } from '@/utils'
 import { Box, Container, Divider } from '@mui/material'
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next'
+import Script from 'next/script'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeDocument from 'rehype-document'
 import rehypeFormat from 'rehype-format'
@@ -13,7 +15,6 @@ import remarkPrism from 'remark-prism'
 import remarkRehype from 'remark-rehype'
 import remarkToc from 'remark-toc'
 import { unified } from 'unified'
-import Script from 'next/script'
 
 const baseUrl = process.env.API_URL
 
@@ -26,6 +27,15 @@ export default function BlogDetailPage({ post }: BlogPageProps) {
 
   return (
     <Box>
+      <Seo
+        data={{
+          title: `${post.title}`,
+          description: post.description,
+          url: `${process.env.HOST_URL}/blog/${post.slug}`,
+          thumbnailUrl: post.thumbnailUrl
+        }}
+      />
+
       <Container>
         <h1>{post.title}</h1>
 

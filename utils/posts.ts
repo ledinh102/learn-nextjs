@@ -19,6 +19,7 @@ export async function getPosts(): Promise<Post[]> {
       id: fileName,
       slug: data.slug,
       title: data.title,
+      thumbnailUrl: data.image || null,
       author: {
         name: data.author,
         title: data.author_title,

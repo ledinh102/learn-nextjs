@@ -4,7 +4,7 @@ export interface SeoData {
   title: string
   description: string
   url: string
-  thumbnailUrl: string
+  thumbnailUrl?: string
 }
 export interface SeoProps {
   data: SeoData
