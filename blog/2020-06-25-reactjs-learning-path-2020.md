@@ -79,7 +79,7 @@ Giờ học code ReactJS thôi hehe 😎
 - Đây là một nội dung OPTIONAL. Không có Type Checking, code của bạn vẫn chạy được bình thường.
 - Thỉnh thoảng bạn thấy code như vầy:
 
-```js
+```js[class='line-numbers']
 import PropTypes from 'prop-types'
 
 function Item() {
