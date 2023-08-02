@@ -1,4 +1,4 @@
-import { Post, PostPage } from '@/models'
+import { Post } from '@/models'
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next'
 import { useRouter } from 'next/router'
 
@@ -18,7 +18,7 @@ export default function Post({ post }: PostProps) {
     <>
       <p>Id: {post.id}</p>
       <p>Title: {post.title}</p>
-      <p>Body: {post.body}</p>
+      <p>Body: {post.description}</p>
       <p>Created by: </p>
     </>
   )
@@ -26,14 +26,15 @@ export default function Post({ post }: PostProps) {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const response = await fetch(`${baseUrl}/api/posts?_page=1`)
-  const postPage: PostPage = await response.json()
-  const paths = postPage.data.map(post => ({
-    params: { postId: post.id },
+  const data = await response.json()
+  const posts: Post[] = data.data
+  const paths = posts.map(post => ({
+    params: { postId: String(post.id) }
   }))
 
   return {
     paths,
-    fallback: true,
+    fallback: true
   }
 }
 
@@ -48,8 +49,8 @@ export const getStaticProps: GetStaticProps<PostProps> = async (context: GetStat
 
   return {
     props: {
-      post,
+      post
     },
-    revalidate: 5,
+    revalidate: 5
   }
 }
