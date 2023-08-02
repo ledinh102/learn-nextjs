@@ -9,7 +9,7 @@ import { Box, Typography } from '@mui/material'
 const baseUrl = process.env.API_URL
 
 const Header = dynamic(() => import(`@/components/common/header`), {
-  ssr: false,
+  ssr: false
 })
 
 export interface AboutProps {}
@@ -38,8 +38,8 @@ export default function About(props: AboutProps) {
       {
         pathname: '/about',
         query: {
-          page: Number(page) + 1 || 1,
-        },
+          page: Number(page) + 1 || 1
+        }
       },
       undefined,
       { shallow: true }
@@ -51,7 +51,7 @@ export default function About(props: AboutProps) {
       <Typography component='h1' variant='h3' color='primary.main'>
         About page
       </Typography>
-      <Header />
+      {/* <Header /> */}
       <ul>
         {posts?.map(post => (
           <li key={post.id}>{post.title}</li>
