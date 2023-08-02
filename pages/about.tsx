@@ -8,9 +8,9 @@ import { Box, Typography } from '@mui/material'
 
 const baseUrl = process.env.API_URL
 
-const Header = dynamic(() => import(`@/components/common/header`), {
-  ssr: false
-})
+// const Header = dynamic(() => import(`@/components/common/header`), {
+//   ssr: false
+// })
 
 export interface AboutProps {}
 
