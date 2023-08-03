@@ -1,16 +1,15 @@
-import { Box, Container, Stack, Link as MuiLink } from '@mui/material'
-import { ROUTE_lIST } from './routes'
-import NextLink from 'next/link'
-import { useState } from 'react'
-import { useRouter } from 'next/router'
-import clsx from 'clsx'
 import { useAuth } from '@/hooks'
+import { Box, Container, Link as MuiLink, Stack } from '@mui/material'
+import clsx from 'clsx'
+import NextLink from 'next/link'
+import { useRouter } from 'next/router'
+import { ROUTE_lIST } from './routes'
 export interface HeaderDesktopProps {}
 
 export default function HeaderDesktop(props: HeaderDesktopProps) {
   const router = useRouter()
   const { profile, logout } = useAuth()
-  const isLoggedIn = !!profile?.username
+  const isLoggedIn = Boolean(profile?.username)
 
   const routes = ROUTE_lIST.filter(route => !route.requireLogin || isLoggedIn)
 

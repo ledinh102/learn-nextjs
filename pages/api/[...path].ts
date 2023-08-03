@@ -6,8 +6,8 @@ const baseUrl = process.env.API_URL
 
 export const config = {
   api: {
-    bodyParser: false,
-  },
+    bodyParser: false
+  }
 }
 
 const proxy = httpProxy.createProxyServer()
@@ -23,11 +23,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<any>) 
     proxy.web(req, res, {
       target: baseUrl,
       changeOrigin: true,
-      selfHandleResponse: false,
+      selfHandleResponse: false
     })
 
     proxy.once('proxyRes', () => {
-      resolve(true)
+      return resolve(true)
     })
   })
 }

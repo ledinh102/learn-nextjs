@@ -1,13 +1,13 @@
+import Cookies from 'cookies'
 import httpProxy from 'http-proxy'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import Cookies from 'cookies'
 
 const baseUrl = process.env.API_URL
 
 export const config = {
   api: {
-    bodyParser: false,
-  },
+    bodyParser: false
+  }
 }
 
 const proxy = httpProxy.createProxyServer()
@@ -20,5 +20,5 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<any>) 
   const cookies = new Cookies(req, res)
   cookies.set('access_token')
 
-  res.status(200).json({ message: 'logout successfully' })
+  return res.status(200).json({ message: 'logout successfully' })
 }
