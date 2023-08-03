@@ -1,4 +1,5 @@
 import { authApi } from '@/api-client'
+import { LoginForm } from '@/components/auth'
 import { useAuth } from '@/hooks'
 import { useRouter } from 'next/router'
 
@@ -42,6 +43,7 @@ export default function LoginPage() {
       <button onClick={handleLoginClick}>Login</button>
       {/* <button onClick={handleGetProfileClick}>Get profile</button> */}
       <button onClick={handleLogoutClick}>Logout</button>
+      <LoginForm />
     </div>
   )
 }
