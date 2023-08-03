@@ -10,8 +10,8 @@ type Data = {
 
 export const config = {
   api: {
-    bodyParser: false,
-  },
+    bodyParser: false
+  }
 }
 
 const proxy = httpProxy.createProxyServer()
@@ -29,21 +29,26 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
       })
       proxyRes.on('end', function () {
         try {
+          const isSuccess = proxyRes.statusCode && proxyRes.statusCode >= 200 && proxyRes.statusCode < 300
+
+          if (!isSuccess) {
+            ;(res as NextApiResponse).status(proxyRes.statusCode || 500).json(body)
+            return resolve(true)
+          }
           const { accessToken, expiredAt } = JSON.parse(body)
 
           const cookies = new Cookies(req, res, { secure: process.env.NODE_ENV !== 'development' })
           cookies.set('access_token', accessToken, {
             httpOnly: true,
             sameSite: 'lax',
-            expires: new Date(expiredAt),
+            expires: new Date(expiredAt)
           })
-
-          res.end('my response to cli')
+          ;(res as NextApiResponse).status(200).json({ message: 'login successfully' })
         } catch (error) {
           console.log(error)
         }
 
-        resolve(true)
+        return resolve(true)
       })
     }
 
@@ -51,7 +56,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
     proxy.web(req, res, {
       target: baseUrl,
       changeOrigin: true,
-      selfHandleResponse: true,
+      selfHandleResponse: true
     })
   })
 }
