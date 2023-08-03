@@ -13,6 +13,7 @@
     "@emotion/react": "^11.11.1",
     "@emotion/server": "^11.11.0",
     "@emotion/styled": "^11.11.0",
+    "@hookform/resolvers": "^3.1.1",
     "@mui/icons-material": "^5.14.1",
     "@mui/material": "^5.14.2",
     "@types/http-proxy": "^1.17.11",
@@ -44,7 +45,8 @@
     "swr": "^2.2.0",
     "typescript": "5.1.6",
     "unified": "^10.1.2",
-    "vfile-reporter": "^8.0.0"
+    "vfile-reporter": "^8.0.0",
+    "yup": "^1.2.0"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",

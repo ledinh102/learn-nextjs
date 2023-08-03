@@ -26,6 +26,8 @@ export function InputField({ name, label, control, ...rest }: InputFieldProps) {
       onChange={onChange}
       onBlur={onBlur}
       inputRef={ref}
+      error={!!error}
+      helperText={error?.message}
       {...rest}
     />
   )
