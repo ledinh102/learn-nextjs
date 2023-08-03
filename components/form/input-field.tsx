@@ -6,7 +6,7 @@ export type InputFieldProps = TextFieldProps & {
   control: Control<any>
 }
 
-export function InputField({ name, label, control, ...rest }: InputFieldProps) {
+export function InputField({ name, control, ...rest }: InputFieldProps) {
   const {
     field: { onChange, onBlur, value, ref },
     fieldState: { error }
@@ -22,7 +22,6 @@ export function InputField({ name, label, control, ...rest }: InputFieldProps) {
       margin='normal'
       name={name}
       value={value}
-      label={label}
       onChange={onChange}
       onBlur={onBlur}
       inputRef={ref}

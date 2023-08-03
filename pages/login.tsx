@@ -2,6 +2,7 @@ import { authApi } from '@/api-client'
 import { LoginForm } from '@/components/auth'
 import { useAuth } from '@/hooks'
 import { LoginPayload } from '@/models'
+import { Box, Paper, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 
 export default function LoginPage() {
@@ -46,15 +47,23 @@ export default function LoginPage() {
   }
 
   return (
-    <div>
-      <h1>Login page</h1>
+    <Box>
+      <Paper
+        elevation={4}
+        sx={{
+          mx: 'auto',
+          mt: 20,
+          p: 4,
+          maxWidth: '480px',
+          textAlign: 'center'
+        }}
+      >
+        <Typography component='h1' variant='h5' mb={2}>
+          Login
+        </Typography>
 
-      <p>Profile: {JSON.stringify(profile)}</p>
-
-      {/* <button onClick={handleLoginClick}>Login</button> */}
-      {/* <button onClick={handleGetProfileClick}>Get profile</button> */}
-      <button onClick={handleLogoutClick}>Logout</button>
-      <LoginForm onSubmit={handleLoginSubmit} />
-    </div>
+        <LoginForm onSubmit={handleLoginSubmit} />
+      </Paper>
+    </Box>
   )
 }
