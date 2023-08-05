@@ -43,8 +43,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
             sameSite: 'lax',
             expires: new Date(expiredAt)
           })
-          // ;(res as NextApiResponse).status(200).json({ message: 'login successfully' })
-          ;(res as NextApiResponse).status(400).json({ message: 'wrong username and password' })
+          ;(res as NextApiResponse).status(200).json({ message: 'login successfully' })
+          // ;(res as NextApiResponse).status(400).json({ message: 'wrong username and password' })
         } catch (error) {
           ;(res as NextApiResponse).status(500).json(error)
         }
