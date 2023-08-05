@@ -1,9 +1,18 @@
 import { authApi } from '@/api-client'
+import { StorageKeys } from '@/constants'
 import { LoginPayload, UserProfile } from '@/models'
-import useSWR from 'swr'
-import { PublicConfiguration } from 'swr/_internal'
+import useSWR, { SWRConfiguration } from 'swr'
 
-export function useAuth(options?: Partial<PublicConfiguration>) {
+function getUserInfo(): UserProfile | null {
+  try {
+    console.log('user info', JSON.parse(localStorage.getItem(StorageKeys.USER_INFO) || ''))
+    return JSON.parse(localStorage.getItem(StorageKeys.USER_INFO) || '')
+  } catch (error) {
+    return null
+  }
+}
+
+export function useAuth(options?: Partial<SWRConfiguration>) {
   const {
     data: profile,
     error,
@@ -11,27 +20,35 @@ export function useAuth(options?: Partial<PublicConfiguration>) {
   } = useSWR<UserProfile | null>('/profile', {
     dedupingInterval: 60 * 60 * 1000,
     revalidateOnFocus: false,
-    ...options
+    ...options,
+    fallbackData: getUserInfo(),
+    onSuccess(data) {
+      localStorage.setItem(StorageKeys.USER_INFO, JSON.stringify(data))
+    },
+    onError(err) {
+      console.log(err)
+      logout()
+    }
   })
 
   const firstLoading = profile === undefined && error === undefined
 
   async function login(payload: LoginPayload) {
     await authApi.login(payload)
-
     await mutate()
   }
+
   async function logout() {
     await authApi.logout()
-
     mutate(null, false)
+    localStorage.removeItem(StorageKeys.USER_INFO)
   }
 
   return {
     profile,
     error,
-    firstLoading,
     login,
-    logout
+    logout,
+    firstLoading
   }
 }

@@ -6,8 +6,8 @@ import { Box, Button, IconButton, InputAdornment } from '@mui/material'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
-import { CircleLoading } from '../loading'
 import { InputField } from '../form'
+import { CircleLoading } from '../loading'
 
 export interface LoginFormProps {
   onSubmit: (payload: LoginPayload) => void

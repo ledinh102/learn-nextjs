@@ -1,9 +1,10 @@
 import { LayoutProps } from '@/models'
-import { Box, Container, Stack } from '@mui/material'
-import Link from 'next/link'
+import { Box, Stack } from '@mui/material'
+import dynamic from 'next/dynamic'
 import { useEffect } from 'react'
 import { Footer } from '../common'
-import { Header } from '../common/header'
+
+const Header = dynamic(() => import('../common/header').then(mod => mod.Header), { ssr: false })
 
 export function MainLayout({ children }: LayoutProps) {
   useEffect(() => {
