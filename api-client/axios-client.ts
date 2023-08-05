@@ -1,10 +1,10 @@
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 
 export const axiosClient = axios.create({
   baseURL: '/api',
   headers: {
-    'Content-Type': 'application/json',
-  },
+    'Content-Type': 'application/json'
+  }
 })
 
 // Add a response interceptor
@@ -14,9 +14,9 @@ axiosClient.interceptors.response.use(
     // Do something with response data
     return response.data
   },
-  function (error) {
+  function (error: AxiosError) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
-    return Promise.reject(error)
+    return Promise.reject(error.response?.data)
   }
 )

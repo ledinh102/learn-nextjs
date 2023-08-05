@@ -1,9 +1,10 @@
-import { authApi } from '@/api-client'
 import { LoginForm } from '@/components/auth'
 import { useAuth } from '@/hooks'
 import { LoginPayload } from '@/models'
+import { getErrorMessage } from '@/utils'
 import { Box, Paper, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
+import { toast } from 'react-toastify'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -42,7 +43,8 @@ export default function LoginPage() {
       console.log('redirect to dashboard')
       router.push('/')
     } catch (error) {
-      console.log('failed to login', error)
+      const message = getErrorMessage(error)
+      toast.error(message)
     }
   }
 
