@@ -49,7 +49,7 @@ export function FeaturedWorksSection(props: FeaturedWorksSectionProps) {
           Featured works
         </Typography>
 
-        <WorkList works={works} />
+        <WorkList works={works} loading={false} />
       </Container>
     </Box>
   )

@@ -2,8 +2,8 @@ import { Work } from '@/models'
 import { Box, Divider, Stack } from '@mui/material'
 import Image from 'next/image'
 import { Fragment } from 'react'
-import { WorkCard } from './word-card'
-import { WorkSkeleton } from './word-skeleton'
+import { WorkCard } from './work-card'
+import { WorkSkeleton } from './work-skeleton'
 
 export interface WorkListProps {
   works: Work[]

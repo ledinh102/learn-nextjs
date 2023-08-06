@@ -8,3 +8,7 @@ export interface Work {
   updatedAt: number
   thumbnailUrl: string
 }
+
+export interface WorkFiltersPayload {
+  search: string
+}

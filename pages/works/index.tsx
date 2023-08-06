@@ -1,7 +1,7 @@
 import { MainLayout } from '@/components/layout'
-import { WorkList } from '@/components/work'
+import { WorkFilters, WorkList } from '@/components/work'
 import { useWorks } from '@/hooks'
-import { ListPrams } from '@/models'
+import { ListPrams, WorkFiltersPayload } from '@/models'
 import { Box, Container, Pagination, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
 
@@ -16,6 +16,11 @@ export default function WorksPage(props: WorksPageProps) {
     setFilter(prev => ({ ...prev, _page: value }))
   }
 
+  const handleFiltersChange = (newFilters: WorkFiltersPayload) => {
+    console.log('new filters', newFilters)
+    setFilter(prev => ({ ...prev, _page: 1, title_like: newFilters.search }))
+  }
+
   return (
     <Container>
       <Box my={5}>
@@ -24,16 +29,20 @@ export default function WorksPage(props: WorksPageProps) {
         </Typography>
       </Box>
 
+      <WorkFilters onSubmit={handleFiltersChange} />
+
       <WorkList works={data?.data || []} loading={isLoading} />
 
       <Stack alignItems='center' mt={5}>
-        <Pagination
-          count={Math.ceil(data?.pagination._totalRows / data?.pagination._limit) || 0}
-          shape='rounded'
-          page={data?.pagination._page || 1}
-          onChange={handleChangePage}
-          size='large'
-        />
+        {data?.data.length > 0 && (
+          <Pagination
+            count={Math.ceil(data?.pagination._totalRows / data?.pagination._limit) || 0}
+            shape='rounded'
+            page={data?.pagination._page || 1}
+            onChange={handleChangePage}
+            size='large'
+          />
+        )}
       </Stack>
     </Container>
   )

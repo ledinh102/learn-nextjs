@@ -31,13 +31,13 @@ export default function Posts({ postPage }: PostsProps) {
   )
 }
 
-export const getStaticProps: GetStaticProps<PostsProps> = async (context: GetStaticPropsContext) => {
-  const response = await fetch(`${baseUrl}/api/posts?_page=1`)
-  const postPage: PostPage = await response.json()
+// export const getStaticProps: GetStaticProps<PostsProps> = async (context: GetStaticPropsContext) => {
+//   const response = await fetch(`${baseUrl}/api/posts?_page=1`)
+//   const postPage: PostPage = await response.json()
 
-  return {
-    props: {
-      postPage,
-    },
-  }
-}
+//   return {
+//     props: {
+//       postPage,
+//     },
+//   }
+// }

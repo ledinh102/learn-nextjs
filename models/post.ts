@@ -1,4 +1,4 @@
-import { Pagination } from './common'
+import { Pagination } from './api'
 
 export interface Author {
   name: string
@@ -24,5 +24,5 @@ export interface Post {
 
 export interface PostPage {
   data: Post[]
-  pagination: Pagination[]
+  pagination: Pagination
 }
