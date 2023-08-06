@@ -1,9 +1,8 @@
 import { MainLayout } from '@/components/layout'
-import { CircleLoading } from '@/components/loading'
 import { WorkList } from '@/components/work'
 import { useWorks } from '@/hooks'
 import { ListPrams } from '@/models'
-import { Box, Button, Container, Stack, Typography } from '@mui/material'
+import { Box, Container, Pagination, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
 
 export interface WorksPageProps {}
@@ -13,12 +12,8 @@ export default function WorksPage(props: WorksPageProps) {
   const { data, isLoading } = useWorks({ params: filter })
   console.log({ data, isLoading })
 
-  const handleNextPage = () => {
-    setFilter(prev => ({ ...prev, _page: (prev?._page || 0) + 1 }))
-  }
-
-  const handlePreviousPage = () => {
-    setFilter(prev => ({ ...prev, _page: (prev?._page || 0) - 1 }))
+  const handleChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
+    setFilter(prev => ({ ...prev, _page: value }))
   }
 
   return (
@@ -31,13 +26,14 @@ export default function WorksPage(props: WorksPageProps) {
 
       <WorkList works={data?.data || []} loading={isLoading} />
 
-      <Stack spacing={2} direction='row' justifyContent='center' mt={3}>
-        <Button variant='contained' onClick={handlePreviousPage}>
-          Previous page
-        </Button>
-        <Button variant='contained' onClick={handleNextPage}>
-          Next page
-        </Button>
+      <Stack alignItems='center' mt={5}>
+        <Pagination
+          count={Math.ceil(data?.pagination._totalRows / data?.pagination._limit) || 0}
+          shape='rounded'
+          page={data?.pagination._page || 1}
+          onChange={handleChangePage}
+          size='large'
+        />
       </Stack>
     </Container>
   )
