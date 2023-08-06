@@ -1,22 +1,30 @@
-import { workApi } from '@/api-client'
 import { MainLayout } from '@/components/layout'
-import { useEffect } from 'react'
+import { useWorks } from '@/hooks'
+import { ListPrams } from '@/models'
+import { Box, Button } from '@mui/material'
+import { useState } from 'react'
 
 export interface WorksPageProps {}
 
 export default function WorksPage(props: WorksPageProps) {
-  useEffect(() => {
-    ;(async () => {
-      try {
-        const works = await workApi.getAll({})
-        console.log({ works })
-      } catch (error) {
-        console.log('error', error)
-      }
-    })()
-  }, [])
+  const [filter, setFilter] = useState<Partial<ListPrams>>({ _page: 1, _limit: 10 })
+  const { data, isLoading } = useWorks({ params: filter })
+  console.log({ data, isLoading })
 
-  return <div>Works page</div>
+  const handleNextPage = () => {
+    setFilter(prev => ({ ...prev, _page: (prev?._page || 0) + 1 }))
+  }
+
+  return (
+    <div>
+      Works page
+      <Box>
+        <Button variant='contained' onClick={handleNextPage}>
+          Next page
+        </Button>
+      </Box>
+    </div>
+  )
 }
 
 WorksPage.Layout = MainLayout
