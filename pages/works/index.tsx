@@ -1,8 +1,9 @@
 import { MainLayout } from '@/components/layout'
+import { CircleLoading } from '@/components/loading'
 import { WorkList } from '@/components/work'
 import { useWorks } from '@/hooks'
 import { ListPrams } from '@/models'
-import { Box, Button, Stack, Typography } from '@mui/material'
+import { Box, Button, Container, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
 
 export interface WorksPageProps {}
@@ -21,14 +22,14 @@ export default function WorksPage(props: WorksPageProps) {
   }
 
   return (
-    <Box>
-      <Box>
+    <Container>
+      <Box my={5}>
         <Typography component='h1' variant='h3' fontWeight='bold'>
           Work
         </Typography>
       </Box>
 
-      <WorkList works={data?.data || []} />
+      <WorkList works={data?.data || []} loading={isLoading} />
 
       <Stack spacing={2} direction='row' justifyContent='center' mt={3}>
         <Button variant='contained' onClick={handlePreviousPage}>
@@ -38,7 +39,7 @@ export default function WorksPage(props: WorksPageProps) {
           Next page
         </Button>
       </Stack>
-    </Box>
+    </Container>
   )
 }
 
