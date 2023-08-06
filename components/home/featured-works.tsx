@@ -8,35 +8,38 @@ export function FeaturedWorksSection(props: FeaturedWorksSectionProps) {
     {
       id: '1',
       title: 'Designing Dashboards',
-      shortDesc:
+      shortDescription:
         'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
-      fullDesc: '',
+      fullDescription: '',
       createdAt: 1390776056149,
       updatedAt: 1620776056149,
       tagList: ['Dashboard'],
-      thumbnailUrl: 'https://res.cloudinary.com/dtsbsc6r6/image/upload/v1690794825/Rectangle_32_gmu9i7.jpg'
+      thumbnailUrl:
+        'https://res.cloudinary.com/dtsbsc6r6/image/upload/v1690794825/nextjs-project/Rectangle_34_jmywut.jpg'
     },
     {
       id: '2',
       title: 'Vibrant Portraits of 2020',
-      shortDesc:
+      shortDescription:
         'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
-      fullDesc: '',
+      fullDescription: '',
       createdAt: 1390776056149,
       updatedAt: 1620776056149,
       tagList: ['Illustration'],
-      thumbnailUrl: 'https://res.cloudinary.com/dtsbsc6r6/image/upload/v1690794825/Rectangle_30_muxtrw.jpg'
+      thumbnailUrl:
+        'https://res.cloudinary.com/dtsbsc6r6/image/upload/v1690794825/nextjs-project/Rectangle_32_gmu9i7.jpg'
     },
     {
       id: '3',
       title: '36 Days of Malayalam type',
-      shortDesc:
+      shortDescription:
         'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
-      fullDesc: '',
+      fullDescription: '',
       createdAt: 1390776056149,
       updatedAt: 1620776056149,
       tagList: ['Typography'],
-      thumbnailUrl: 'https://res.cloudinary.com/dtsbsc6r6/image/upload/v1690794825/Rectangle_34_jmywut.jpg'
+      thumbnailUrl:
+        'https://res.cloudinary.com/dtsbsc6r6/image/upload/v1690794825/nextjs-project/Rectangle_30_muxtrw.jpg'
     }
   ]
   return (

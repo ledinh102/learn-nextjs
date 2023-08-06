@@ -27,7 +27,7 @@ export function WorkCard({ work }: WorkCardProps) {
           <Chip color='secondary' label={format(work.updatedAt, 'yyyy')} size='small' />
           <Typography color='GrayText'>{work.tagList.join(', ')}</Typography>
         </Stack>
-        <Typography mt={3}>{work.shortDesc}</Typography>
+        <Typography mt={3}>{work.shortDescription}</Typography>
       </Box>
     </Stack>
   )

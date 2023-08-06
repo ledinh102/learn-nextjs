@@ -2,8 +2,8 @@ export interface Work {
   id: string
   title: string
   tagList: string[]
-  shortDesc: string
-  fullDesc: string
+  shortDescription: string
+  fullDescription: string
   createdAt: number
   updatedAt: number
   thumbnailUrl: string
