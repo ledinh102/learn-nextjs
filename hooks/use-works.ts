@@ -6,10 +6,11 @@ import useSWR, { SWRConfiguration } from 'swr'
 export interface UseWorksProps {
   params: Partial<ListPrams>
   options?: SWRConfiguration
+  enabled?: boolean
 }
 
-export function useWorks({ params, options }: UseWorksProps) {
-  const swrResponse = useSWR([QueryKeys.GET_WORKS, params], () => workApi.getAll(params), {
+export function useWorks({ params, enabled = true, options }: UseWorksProps) {
+  const swrResponse = useSWR(enabled ? [QueryKeys.GET_WORKS, params] : null, () => workApi.getAll(params), {
     dedupingInterval: 30 * 1000,
     keepPreviousData: true,
     fallbackData: {

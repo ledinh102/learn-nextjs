@@ -6,17 +6,20 @@ import { InputField } from '../form'
 import { ChangeEvent } from 'react'
 
 export interface WorkFiltersProps {
-  onSubmit: (payload: WorkFiltersPayload) => void
+  initialValues?: WorkFiltersPayload
+  onSubmit?: (payload: WorkFiltersPayload) => void
 }
 
-export function WorkFilters({ onSubmit }: WorkFiltersProps) {
+export function WorkFilters({ initialValues, onSubmit }: WorkFiltersProps) {
+  console.log('initialValues', initialValues)
   const {
     control,
     handleSubmit,
     formState: { isSubmitting }
   } = useForm<WorkFiltersPayload>({
     defaultValues: {
-      search: ''
+      search: '',
+      ...initialValues
     }
   })
 

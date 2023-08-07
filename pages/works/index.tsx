@@ -3,22 +3,50 @@ import { WorkFilters, WorkList } from '@/components/work'
 import { useWorks } from '@/hooks'
 import { ListPrams, WorkFiltersPayload } from '@/models'
 import { Box, Container, Pagination, Stack, Typography } from '@mui/material'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 
 export interface WorksPageProps {}
 
 export default function WorksPage(props: WorksPageProps) {
-  const [filter, setFilter] = useState<Partial<ListPrams>>({ _page: 1, _limit: 3 })
-  const { data, isLoading } = useWorks({ params: filter })
-  console.log({ data, isLoading })
+  const router = useRouter()
+  const filters: Partial<ListPrams> = {
+    _page: 1,
+    _limit: 3,
+    ...router.query
+  }
+  const initFiltersPayload: WorkFiltersPayload = {
+    search: filters.title_like || ''
+  }
+  const { data, isLoading } = useWorks({ params: filters, enabled: router.isReady })
 
   const handleChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
-    setFilter(prev => ({ ...prev, _page: value }))
+    router.push(
+      {
+        pathname: router.pathname,
+        query: {
+          ...filters,
+          _page: value
+        }
+      },
+      undefined,
+      { shallow: true }
+    )
   }
 
   const handleFiltersChange = (newFilters: WorkFiltersPayload) => {
-    console.log('new filters', newFilters)
-    setFilter(prev => ({ ...prev, _page: 1, title_like: newFilters.search }))
+    router.push(
+      {
+        pathname: router.pathname,
+        query: {
+          ...filters,
+          _page: 1,
+          title_like: newFilters.search
+        }
+      },
+      undefined,
+      { shallow: true }
+    )
   }
 
   return (
@@ -29,7 +57,7 @@ export default function WorksPage(props: WorksPageProps) {
         </Typography>
       </Box>
 
-      <WorkFilters onSubmit={handleFiltersChange} />
+      {router.isReady && <WorkFilters onSubmit={handleFiltersChange} initialValues={initFiltersPayload} />}
 
       <WorkList works={data?.data || []} loading={isLoading} />
 
