@@ -7,7 +7,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { InputField } from '../form'
-import { CircleLoading } from '../loading/circle-loading'
+import { CircleLoading } from './circle-loading'
 
 export interface LoginFormProps {
   onSubmit: (payload: LoginPayload) => void
