@@ -1,8 +1,8 @@
 import { MainLayout } from '@/components/layout'
 import { WorkFilters, WorkList } from '@/components/work'
-import { useWorks } from '@/hooks'
+import { useWorksInfinite } from '@/hooks/use-works-infinity'
 import { ListParams, WorkFiltersPayload } from '@/models'
-import { Box, Container, Pagination, Skeleton, Stack, Typography } from '@mui/material'
+import { Box, Container, Skeleton, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 
 export interface WorksPageProps {}
@@ -10,29 +10,17 @@ export interface WorksPageProps {}
 export default function WorksPage(props: WorksPageProps) {
   const router = useRouter()
   const filters: Partial<ListParams> = {
-    _page: 1,
-    _limit: 3,
     ...router.query
   }
   const initFiltersPayload: WorkFiltersPayload = {
     selectedTagList: filters.tagList_like?.split('|'),
     search: filters.title_like || ''
   }
-  const { data, isLoading } = useWorks({ params: filters, enabled: router.isReady })
-
-  const handleChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
-    router.push(
-      {
-        pathname: router.pathname,
-        query: {
-          ...filters,
-          _page: value
-        }
-      },
-      undefined,
-      { shallow: true }
-    )
-  }
+  const { data, isLoading, isValidating, size, setSize } = useWorksInfinite({
+    params: filters,
+    enabled: router.isReady
+  })
+  console.log('data', { data, isLoading, isValidating, size })
 
   const handleFiltersChange = (newFilters: WorkFiltersPayload) => {
     router.push(
@@ -64,19 +52,7 @@ export default function WorksPage(props: WorksPageProps) {
         <Skeleton variant='rectangular' height={40} sx={{ mt: 2, mb: 1, display: 'inline-block', width: '100%' }} />
       )}
 
-      <WorkList works={data?.data || []} loading={!router.isReady || isLoading} />
-
-      <Stack alignItems='center' mt={5}>
-        {data?.data.length > 0 && (
-          <Pagination
-            count={Math.ceil(data?.pagination._totalRows / data?.pagination._limit) || 0}
-            shape='rounded'
-            page={data?.pagination._page || 1}
-            onChange={handleChangePage}
-            size='large'
-          />
-        )}
-      </Stack>
+      <WorkList works={[]} loading={!router.isReady || isLoading} />
     </Container>
   )
 }
