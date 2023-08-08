@@ -1,8 +1,8 @@
+import { ListParams, ListResponse, Work } from '@/models'
 import { axiosClient } from './axios-client'
-import { ListPrams, ListResponse, LoginPayload, Work } from '@/models'
 
 export const workApi = {
-  getAll(params: Partial<ListPrams>): Promise<ListResponse<Work>> {
+  getAll(params: Partial<ListParams>): Promise<ListResponse<Work>> {
     return axiosClient.get('/works', { params })
   },
   get(id: string): Promise<Work> {

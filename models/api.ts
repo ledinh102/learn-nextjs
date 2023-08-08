@@ -1,4 +1,4 @@
-export interface ListPrams {
+export interface ListParams {
   _page: number
   _limit: number
   title_like: string

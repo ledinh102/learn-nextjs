@@ -1,21 +1,29 @@
 import { MainLayout } from '@/components/layout'
 import { WorkFilters, WorkList } from '@/components/work'
 import { useWorks } from '@/hooks'
-import { ListPrams, WorkFiltersPayload } from '@/models'
+import { ListParams, WorkFiltersPayload } from '@/models'
 import { Box, Container, Pagination, Skeleton, Stack, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export interface WorksPageProps {}
 
 export default function WorksPage(props: WorksPageProps) {
   const router = useRouter()
-  const filters: Partial<ListPrams> = {
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+
+  const filters: Partial<ListParams> = {
     _page: 1,
     _limit: 3,
     ...router.query
   }
   const initFiltersPayload: WorkFiltersPayload = {
+    tagList_search: '',
+    selectedTagList: [],
     search: filters.title_like || ''
   }
   const { data, isLoading } = useWorks({ params: filters, enabled: router.isReady })
@@ -57,7 +65,7 @@ export default function WorksPage(props: WorksPageProps) {
         </Typography>
       </Box>
 
-      {router.isReady ? (
+      {isClient ? (
         <WorkFilters onSubmit={handleFiltersChange} initialValues={initFiltersPayload} />
       ) : (
         <Skeleton variant='rectangular' height={40} sx={{ mt: 2, mb: 1, display: 'inline-block', width: '100%' }} />
