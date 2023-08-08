@@ -10,20 +10,13 @@ export interface WorksPageProps {}
 
 export default function WorksPage(props: WorksPageProps) {
   const router = useRouter()
-  const [isClient, setIsClient] = useState(false)
-
-  useEffect(() => {
-    setIsClient(true)
-  }, [])
-
   const filters: Partial<ListParams> = {
     _page: 1,
     _limit: 3,
     ...router.query
   }
   const initFiltersPayload: WorkFiltersPayload = {
-    tagList_search: '',
-    selectedTagList: [],
+    selectedTagList: filters.tagList_like?.split('|'),
     search: filters.title_like || ''
   }
   const { data, isLoading } = useWorks({ params: filters, enabled: router.isReady })
@@ -49,7 +42,8 @@ export default function WorksPage(props: WorksPageProps) {
         query: {
           ...filters,
           _page: 1,
-          title_like: newFilters.search
+          title_like: newFilters.search,
+          tagList_like: newFilters.tagList_like
         }
       },
       undefined,
@@ -65,7 +59,7 @@ export default function WorksPage(props: WorksPageProps) {
         </Typography>
       </Box>
 
-      {isClient ? (
+      {router.isReady ? (
         <WorkFilters onSubmit={handleFiltersChange} initialValues={initFiltersPayload} />
       ) : (
         <Skeleton variant='rectangular' height={40} sx={{ mt: 2, mb: 1, display: 'inline-block', width: '100%' }} />

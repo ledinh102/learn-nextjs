@@ -28,8 +28,12 @@ export function WorkFilters({ initialValues, onSubmit }: WorkFiltersProps) {
   })
 
   const handleLoginSubmit = async (payload: WorkFiltersPayload) => {
+    if (!payload) return
+
     console.log('form submit', payload)
-    // await onSubmit?.(payload)
+    payload.tagList_like = payload.selectedTagList?.join('|') || ''
+    delete payload.selectedTagList
+    await onSubmit?.(payload)
   }
 
   const debounceSearchChange = debounce(handleSubmit(handleLoginSubmit), 1000)
