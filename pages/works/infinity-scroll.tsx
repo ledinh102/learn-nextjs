@@ -1,8 +1,8 @@
 import { MainLayout } from '@/components/layout'
 import { WorkFilters, WorkList } from '@/components/work'
 import { useWorksInfinite } from '@/hooks/use-works-infinity'
-import { ListParams, WorkFiltersPayload } from '@/models'
-import { Box, Container, Skeleton, Typography } from '@mui/material'
+import { ListParams, ListResponse, Work, WorkFiltersPayload } from '@/models'
+import { Box, Button, Container, Skeleton, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 
 export interface WorksPageProps {}
@@ -22,13 +22,19 @@ export default function WorksPage(props: WorksPageProps) {
   })
   console.log('data', { data, isLoading, isValidating, size })
 
+  const works: Array<Work> =
+    data?.reduce((result: Array<Work>, currentPage: ListResponse<Work>) => {
+      result.push(...currentPage.data)
+
+      return result
+    }, []) || []
+
   const handleFiltersChange = (newFilters: WorkFiltersPayload) => {
     router.push(
       {
         pathname: router.pathname,
         query: {
           ...filters,
-          _page: 1,
           title_like: newFilters.search,
           tagList_like: newFilters.tagList_like
         }
@@ -52,7 +58,11 @@ export default function WorksPage(props: WorksPageProps) {
         <Skeleton variant='rectangular' height={40} sx={{ mt: 2, mb: 1, display: 'inline-block', width: '100%' }} />
       )}
 
-      <WorkList works={[]} loading={!router.isReady || isLoading} />
+      <WorkList works={works} loading={!router.isReady || isLoading} />
+
+      <Button variant='contained' onClick={() => setSize(x => x + 1)}>
+        Load more
+      </Button>
     </Container>
   )
 }
