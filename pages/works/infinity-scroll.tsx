@@ -2,13 +2,20 @@ import { MainLayout } from '@/components/layout'
 import { WorkFilters, WorkList } from '@/components/work'
 import { useWorksInfinite } from '@/hooks/use-works-infinity'
 import { ListParams, ListResponse, Work, WorkFiltersPayload } from '@/models'
-import { Box, Button, Container, Skeleton, Typography } from '@mui/material'
+import { Box, Button, CircularProgress, Container, Skeleton, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import { useInView } from 'react-intersection-observer'
 
 export interface WorksPageProps {}
 
 export default function WorksPage(props: WorksPageProps) {
   const router = useRouter()
+  const [isClient, setIsClient] = useState(false)
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+
   const filters: Partial<ListParams> = {
     ...router.query
   }
@@ -20,7 +27,6 @@ export default function WorksPage(props: WorksPageProps) {
     params: filters,
     enabled: router.isReady
   })
-  console.log('data', { data, isLoading, isValidating, size })
 
   const works: Array<Work> =
     data?.reduce((result: Array<Work>, currentPage: ListResponse<Work>) => {
@@ -28,6 +34,18 @@ export default function WorksPage(props: WorksPageProps) {
 
       return result
     }, []) || []
+
+  const totalRows = data?.[0].pagination?._totalRows || 0
+  const showLoadMore = totalRows > works.length
+  const loadingMore = isValidating && works.length > 0
+  const { ref } = useInView({
+    onChange(inView, entry) {
+      console.log({ inView, entry })
+      if (inView) {
+        setSize(x => x + 1)
+      }
+    }
+  })
 
   const handleFiltersChange = (newFilters: WorkFiltersPayload) => {
     router.push(
@@ -52,7 +70,7 @@ export default function WorksPage(props: WorksPageProps) {
         </Typography>
       </Box>
 
-      {router.isReady ? (
+      {isClient ? (
         <WorkFilters onSubmit={handleFiltersChange} initialValues={initFiltersPayload} />
       ) : (
         <Skeleton variant='rectangular' height={40} sx={{ mt: 2, mb: 1, display: 'inline-block', width: '100%' }} />
@@ -60,9 +78,11 @@ export default function WorksPage(props: WorksPageProps) {
 
       <WorkList works={works} loading={!router.isReady || isLoading} />
 
-      <Button variant='contained' onClick={() => setSize(x => x + 1)}>
-        Load more
-      </Button>
+      {showLoadMore && (
+        <Button ref={ref} variant='contained' onClick={() => setSize(x => x + 1)} disabled={loadingMore}>
+          Load more {loadingMore && <CircularProgress size={12} sx={{ ml: 1 }} />}
+        </Button>
+      )}
     </Container>
   )
 }

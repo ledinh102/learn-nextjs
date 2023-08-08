@@ -5,7 +5,6 @@ import useSWR, { SWRConfiguration } from 'swr'
 
 function getUserInfo(): UserProfile | null {
   try {
-    console.log('user info', JSON.parse(localStorage.getItem(StorageKeys.USER_INFO) || ''))
     return JSON.parse(localStorage.getItem(StorageKeys.USER_INFO) || '')
   } catch (error) {
     return null

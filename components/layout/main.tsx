@@ -7,13 +7,6 @@ import { Footer } from '../common'
 const Header = dynamic(() => import('../common/header').then(mod => mod.Header), { ssr: false })
 
 export function MainLayout({ children }: LayoutProps) {
-  useEffect(() => {
-    console.log('mounting...')
-
-    return () => {
-      console.log('unmounting...')
-    }
-  }, [])
   return (
     <Stack minHeight='100vh'>
       <Header />
